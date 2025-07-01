@@ -1,0 +1,6 @@
+@import "tailwindcss";
+.glow-text {
+  color: #ffffff;
+  /* This line is required for text-shadow to work with animation */
+  text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+}
