@@ -136,8 +136,19 @@ export default function Home() {
               onChange={(e) => setEmail(e.target.value)}
               className="w-full sm:w-auto rounded-lg px-4 py-3 bg-orange-100 text-black focus:outline-none focus:ring-4 focus:ring-red-500 transition"
             />
-            
-            {/* call button */}
+           <motion.button
+              type="submit"
+              className="block sm:hidden w-full bg-red-800 hover:bg-red-700 text-orange-100 rounded-lg px-4 py-3 font-semibold shadow-lg hover:scale-105 transition"
+              whileHover={{
+                scale: 1.08,
+                boxShadow: "0px 0px 12px 2px #ea580c55",
+              }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Connect with me
+            </motion.button>
+
+         {/* call button */}
             <a
               href="tel:+254703687830"
               className="w-full sm:w-auto bg-red-800 hover:bg-red-700 text-orange-100 rounded-lg px-4 py-3 font-semibold shadow-lg hover:scale-105 transition inline-flex items-center justify-center space-x-2"
