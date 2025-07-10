@@ -73,26 +73,28 @@ const containerStagger = {
 export default function About() {
   return (
     <motion.div
-      className="min-h-screen bg-gradient-to-r from-black py-16 px-4 sm:px-6 md:px-8 lg:px-12 text-orange-100 relative"
+      className="min-h-screen bg-gradient-to-r from-black py-16 px-4 sm:px-6 md:px-8 lg:px-12 text-orange-100 relative "
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.1 }}
     >
       {/* Work Background */}
       <motion.div
-        className="flex flex-col gap-12 mb-8"
+        className="flex flex-col gap-12 mb-8  "
         initial="hidden"
         animate="visible"
         variants={containerStagger}
       >
-        <div className="space-y-6">
-          <motion.h3
-            className="text-2xl font-semibold text-orange-100 flex items-center gap-2"
-            variants={fadeUp}
-            custom={0}
-          >
-            💼 Work Background
-          </motion.h3>
+        <div className="space-y-6 ">
+            <div className="w-full flex justify-center">
+              <motion.h3
+                className="text-2xl font-semibold text-orange-100 flex items-center gap-2"
+                variants={fadeUp}
+                custom={0}
+              >
+                💼 Work Background
+              </motion.h3>
+            </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center py-8">
             {/* Each Work Card */}
             {[
@@ -144,67 +146,54 @@ export default function About() {
         </div>
       </motion.div>
 
-      {/* Skills & Tools */}
-      <motion.div
-        className="mt-12"
+   {/* Skills & Tools */}
+      <motion.section
+        className="mt-16 text-center"
         initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.5, type: "spring" }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.3, type: "spring" }}
       >
-        <h3 className="text-2xl font-semibold flex items-center mb-4">
-          <span className="mr-2">🛠️</span> Skills & Tools
+        <h3 className="text-3xl font-bold flex justify-center items-center mb-8">
+          <span className="mr-3 text-4xl">🛠️</span> My Skills & Tools
         </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-lg">
-          <motion.div
-            className="text-center sm:text-left"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.7, type: "spring" }}
-          >
-            <span className="font-bold">Languages</span>
-            <ul className="mt-2">
-              {skills.languages.map((lang, i) => <li key={i}>• {lang}</li>)}
-            </ul>
-          </motion.div>
-          <motion.div
-            className="text-center sm:text-left"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.85, type: "spring" }}
-          >
-            <span className="font-bold">Frameworks & Libraries</span>
-            <ul className="mt-2">
-              {skills.frameworks.map((fw, i) => <li key={i}>• {fw}</li>)}
-            </ul>
-          </motion.div>
-          <motion.div
-            className="text-center sm:text-left"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1, type: "spring" }}
-          >
-            <span className="font-bold">Tools & Platforms</span>
-            <ul className="mt-2">
-              {skills.tools.map((tool, i) => <li key={i}>• {tool}</li>)}
-            </ul>
-          </motion.div>
-          <motion.div
-            className="text-center sm:text-left"
-            initial={{ opacity: 0, y: -40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.15, type: "spring" }}
-          >
-            <span className="font-bold">Soft Skills</span>
-            <ul className="mt-2">
-              {skills.softSkills.map((sk, i) => <li key={i}>• {sk}</li>)}
-            </ul>
-          </motion.div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-left">
+          {[
+            { label: "Languages", data: skills.languages, icon: "💻" },
+            { label: "Frameworks & Libraries", data: skills.frameworks, icon: "📚" },
+            { label: "Tools & Platforms", data: skills.tools, icon: "⚙️" },
+            { label: "Soft Skills", data: skills.softSkills, icon: "🤝" },
+          ].map((category, index) => (
+            <motion.div
+              key={category.label}
+              className="bg-white/5 rounded-lg p-4 shadow-sm hover:shadow-md transition duration-300"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 + index * 0.15, type: "spring" }}
+            >
+              <h4 className="flex items-center text-lg font-semibold mb-3">
+                <span className="mr-2">{category.icon}</span> {category.label}
+              </h4>
+              <ul className="space-y-1">
+                {category.data.map((item, i) => (
+                  <li
+                    key={i}
+                    className="hover:text-red-400 transition duration-200 pointer-cu"
+                  >
+                    • {item}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
         </div>
-      </motion.div>
+      </motion.section>
+
 
       {/* Certifications */}
       <motion.div
-        className="space-y-4 mt-11"
+        className="space-y-4 mt-11 text-center"
         initial="hidden"
         animate="visible"
         variants={containerStagger}
@@ -228,10 +217,10 @@ export default function About() {
               custom={index}
               whileHover={{
                 scale: 1.08,
-                rotate: [0, 2, -2, 2, 0],
+                // rotate: [0, 2, -2, 2, 0],
                 boxShadow: "0 0 16px 0 #fbbf24aa"
               }}
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ scale: 0.55 }}
             >
               <img src={cert.logo} alt={cert.issuer} className="h-16 mb-4 object-contain" />
               <h4 className="text-lg font-bold text-red-800 text-center">{cert.name}</h4>
