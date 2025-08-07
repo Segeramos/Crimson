@@ -33,13 +33,8 @@ const certifications = [
     issuer: 'Udemy',
     link: 'https://coursera.org/verify/meta-frontend-certification',
     logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAGllHM_06tkceB-8rg2x8PV1yK52frVK0CQ&s'
-  },
-  {
-    name: 'UI/UX Design',
-    issuer: 'ALX',
-    link: 'https://www.linkedin.com/learning/certificates/your-certificate-id',
-    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuu4n2VgSLyv70udhzHGObeyK8CrxZi9YBNQ&s'
   }
+
 ];
 
 // Animation variants
@@ -133,7 +128,7 @@ export default function About() {
                   <img
                     src={job.logo}
                     alt={`${job.company} logo`}
-                    className="w-10 h-10 object-contain rounded-full"
+                    className="w-10 h-10 object-contain"
                   />
                   <h3 className="text-lg font-semibold text-gray-900">{job.company}</h3>
                 </div>
