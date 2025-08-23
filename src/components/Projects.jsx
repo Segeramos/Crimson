@@ -252,7 +252,7 @@ const seoProjects = [
   },
 {
   title: "Fox Printers",
-  description: "SEO traffic report and user engagement metrics for ISK site.",
+  description: "SEO traffic report and user engagement metrics.",
   image: "/fox.png", // Use your actual image path
   link: "https://foxprinters.com/",
   siteName: "imagesolutions.co.ke",
@@ -309,7 +309,7 @@ const seoProjects = [
 },
 {
   title: "Mighty Ape SEO Performance",
-  description: "User metrics and site behavior analytics for MightyApe Kenya.",
+  description: "User metrics and site behavior analytics for MightyApe Technologies.",
   image: "/MA.png", // Replace with your actual image path
   link: "https://mightyape.co.ke/",
   siteName: "mightyape.co.ke",

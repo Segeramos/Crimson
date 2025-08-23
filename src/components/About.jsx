@@ -31,8 +31,20 @@ const certifications = [
   {
     name: 'Digital Marketing',
     issuer: 'Udemy',
-    link: 'https://coursera.org/verify/meta-frontend-certification',
+    link: 'https://alison.com/',
     logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAGllHM_06tkceB-8rg2x8PV1yK52frVK0CQ&s'
+  },
+   {
+    name: 'Diploma in Cascading Style Sheets using HTML',
+    issuer: 'Alison',
+    link: 'https://alison.com/',
+    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhxRVQiSshFrxBadKsEOw6-cMeG22azmZm_oSOp2PM3I8zVg_bV5CuY_d6N74jRaperlE&usqp=CAU'
+  },
+   {
+    name: 'CSS and JavaScript - Creating a Single Page Flexbox Website',
+    issuer: 'Alison',
+    link: 'https://savanna.alxafrica.com/certificates/cny5pJFxzr',
+    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhxRVQiSshFrxBadKsEOw6-cMeG22azmZm_oSOp2PM3I8zVg_bV5CuY_d6N74jRaperlE&usqp=CAU'
   }
 
 ];

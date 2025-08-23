@@ -13,7 +13,7 @@ const services = [
     badge: "DEV",
     title: "Web Development",
     description:
-      "Full-stack web development using modern technologies such as React, Next.js, and Node.js. From landing pages to complex applications, built for speed and scalability.",
+      "Front end web development using modern technologies such as React,Javascript,tailwind css, and Node.js. From landing pages to complex applications, built for speed and scalability.",
     link: "/projects/web-development",
   },
   {
