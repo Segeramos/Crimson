@@ -5,7 +5,7 @@
 export const about = {
   name: "SEGERA",
   role: "Digital Marketer and Web Developer",
-  tagline: "I specialize in Responsive Web Design",
+  tagline: "Helping businesses get found online",
   profileImg: "/profile.png", // Replace with your img
   summary: `I hold a Bachelor of Science in Information Technology from Cooperative University of Kenya, Karen. I also have skills in UI/UX, Graphic Design, Web development, Digital Marketing (SEO) and interactive web technologies.`,
   work: [
