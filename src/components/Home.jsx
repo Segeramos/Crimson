@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { FaFilePdf } from "react-icons/fa";
 import { about } from "../data";
 import { motion } from "framer-motion";
 import Footer from "./Footer";
@@ -12,7 +13,6 @@ import {
   FaWhatsapp,
 } from "react-icons/fa";
 import { FaPhone } from "react-icons/fa";
-
 
 // Animation variants
 const iconsContainer = {
@@ -110,6 +110,7 @@ export default function Home() {
               Web Developer
             </span>
           </motion.h1>
+
           {/* Animated Tagline */}
           <motion.p
             className="text-lg sm:text-xl lg:text-2xl text-orange-100 text-center lg:text-left"
@@ -119,6 +120,7 @@ export default function Home() {
           >
             {about.tagline}
           </motion.p>
+
           {/* Animated Form */}
           <motion.form
             ref={form}
@@ -134,21 +136,11 @@ export default function Home() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full sm:w-auto rounded-lg px-4 py-3 bg-orange-100 text-black focus:outline-none focus:ring-4 focus:ring-red-500 transition"
+              className="hidden lg:block w-full sm:w-auto rounded-lg px-4 py-3 bg-orange-100 text-black focus:outline-none focus:ring-4 focus:ring-red-500 transition"
             />
-           <motion.button
-              type="submit"
-              className="block sm:hidden w-full bg-red-800 hover:bg-red-700 text-orange-100 rounded-lg px-4 py-3 font-semibold shadow-lg hover:scale-105 transition"
-              whileHover={{
-                scale: 1.08,
-                boxShadow: "0px 0px 12px 2px #ea580c55",
-              }}
-              whileTap={{ scale: 0.98 }}
-            >
-              Connect with me
-            </motion.button>
+         
 
-         {/* call button */}
+            {/* Call button */}
             <a
               href="tel:+254703687830"
               className="w-full sm:w-auto bg-red-800 hover:bg-red-700 text-orange-100 rounded-lg px-4 py-3 font-semibold shadow-lg hover:scale-105 transition inline-flex items-center justify-center space-x-2"
@@ -156,10 +148,25 @@ export default function Home() {
               <FaPhone className="text-lg" />
               <span>Call Me</span>
             </a>
-
-            
           </motion.form>
-          {/* Social links */}
+
+           <motion.div
+            className="mt-10 flex justify-center lg:justify-start"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1 }}
+          >
+            <a
+              href="/Amos_CV.pdf"
+                download
+                className="w-full sm:w-auto bg-red-800 hover:bg-red-700 text-orange-100 rounded-lg px-4 py-3 font-semibold shadow-lg hover:scale-105 transition inline-flex items-center justify-center space-x-2"
+              >
+                <FaFilePdf className="text-lg" />
+                <span>My Resume</span>
+              </a>
+          </motion.div>
+
+          {/* Social Links */}
           <motion.div
             className="flex justify-center lg:justify-start space-x-4 sm:space-x-6 mt-20"
             variants={iconsContainer}
@@ -247,6 +254,9 @@ export default function Home() {
               <FaGithub />
             </motion.a>
           </motion.div>
+
+          {/* ✅ CV Download Button */}
+         
         </div>
 
         {/* Right: Profile Image */}
