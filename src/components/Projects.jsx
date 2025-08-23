@@ -406,9 +406,6 @@ const seoProjects = [
 }
 
 
-
-
-
 ];
 
 // ✅ Design Projects
