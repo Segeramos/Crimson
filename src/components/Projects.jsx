@@ -403,6 +403,13 @@ const seoProjects = [
     avgVisitDuration: { value: "00:00", change: "n/a" },
     bounceRate: { value: "29.73%", change: "n/a" }
   }
+},
+{
+  title: "Nairobi Computers Analytics",
+  description: "THE WEBSITE IS UNDER TESTING, NO ANALYTICS AT THE MOMENT.",
+  image: "/NC.png", // Update with the actual image path
+  link: "https://nairobicomputerstore.com/",
+  
 }
 
 
