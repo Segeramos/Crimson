@@ -77,36 +77,38 @@ export default function App() {
               </svg>
             </button>
 
-            {/* Mobile Dropdown */}
-            <div
-              className={`absolute top-full left-0 w-full 
-                          bg-black/40 backdrop-blur-md rounded-b-2xl
-                          px-6 py-6 flex flex-col items-center space-y-6 md:hidden z-50 shadow-2xl
-                          transform transition-all duration-500 ease-in-out ${
-                menuOpen
-                  ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
-                  : "opacity-0 -translate-y-8 scale-90 pointer-events-none"
-              }`}
-            >
-              {["/", "/about", "/projects", "/services", "/contact"].map((path, i) => (
-                <NavLink
-                  key={path}
-                  to={path}
-                  className={({ isActive }) =>
-                    `text-lg font-semibold pb-1 transition-all duration-300 
-                     ${
-                       isActive
-                         ? "text-red-400 drop-shadow-[0_0_8px_rgba(255,0,0,0.7)]"
-                         : "text-orange-100"
-                     } 
-                     hover:text-red-500 hover:drop-shadow-[0_0_6px_rgba(255,100,100,0.9)]`
-                  }
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {["Home", "About", "MyWork", "Services", "Contact"][i]}
-                </NavLink>
-              ))}
-            </div>
+{/* Mobile Dropdown (proper blur) */}
+<div
+  className={`absolute top-full left-0 w-full 
+             bg-black/65
+              px-6 py-6 flex flex-col items-center space-y-6 md:hidden z-50 shadow-2xl
+              transform transition-all duration-500 ease-in-out ${
+    menuOpen
+      ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
+      : "opacity-0 -translate-y-8 scale-90 pointer-events-none"
+  }`}
+>
+  {["/", "/about", "/projects", "/services", "/contact"].map((path, i) => (
+    <NavLink
+      key={path}
+      to={path}
+      className={({ isActive }) =>
+        `text-lg font-semibold pb-1 transition-all duration-300 
+         ${
+           isActive
+             ? "text-red-400 drop-shadow-[0_0_8px_rgba(255,0,0,0.7)]"
+             : "text-orange-100"
+         } 
+         hover:text-red-500 hover:drop-shadow-[0_0_6px_rgba(255,100,100,0.9)]`
+      }
+      onClick={() => setMenuOpen(false)}
+    >
+      {["Home", "About", "MyWork", "Services", "Contact"][i]}
+    </NavLink>
+  ))}
+</div>
+
+
           </nav>
 
           {/* Page Content */}
