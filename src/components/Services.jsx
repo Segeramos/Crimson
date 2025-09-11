@@ -5,29 +5,81 @@ const services = [
   {
     badge: "WD",
     title: "Web Design",
-    description:
-      "Custom, responsive website designs that blend creativity with functionality. Optimized for mobile, tablet, and desktop to ensure seamless user experiences.",
+    description: (
+      <>
+        <p>
+          Custom, responsive website designs that blend creativity with
+          functionality. I focus on clean UI/UX and accessibility for all
+          devices.
+        </p>
+        <ul className="list-disc list-inside mt-2 text-sm text-orange-100/80 space-y-1">
+          <li>Crafted modern UI layouts in Figma</li>
+          <li>Responsive design for mobile-first performance</li>
+          <li>Optimized load speed & navigation flow</li>
+        </ul>
+      </>
+    ),
     link: "/projects/web-design",
   },
   {
     badge: "DEV",
     title: "Web Development",
-    description:
-      "Front end web development using modern technologies such as React,Javascript,tailwind css, and Node.js. From landing pages to complex applications, built for speed and scalability.",
+    description: (
+      <>
+        <p>
+          Building fast, scalable web applications using modern technologies like
+          React, JavaScript, Tailwind CSS, and Node.js.
+        </p>
+        <ul className="list-disc list-inside mt-2 text-sm text-orange-100/80 space-y-1">
+          <li>Developed e-commerce platforms with secure checkout</li>
+          <li>Integrated APIs for payments & data fetching</li>
+          <li>Followed clean, maintainable code practices</li>
+        </ul>
+      </>
+    ),
     link: "/projects/web-development",
   },
   {
     badge: "SEO",
     title: "Search Engine Optimization",
-    description:
-      "Data-driven SEO strategies to improve rankings, boost organic traffic, and enhance online visibility. Includes keyword research, on-page SEO, and technical optimization.",
+    description: (
+      <>
+        <p>
+          Comprehensive SEO strategies to improve search rankings, increase
+          organic traffic, and maximize online visibility across different
+          industries.
+        </p>
+        <ul className="list-disc list-inside mt-2 text-sm text-orange-100/80 space-y-1">
+          <li>Keyword research & competitor analysis</li>
+          <li>On-page SEO (titles, meta tags, internal linking, content)</li>
+          <li>Technical SEO (site speed, crawlability, indexing, schema)</li>
+          <li>Off-page SEO (backlinks, outreach & citations)</li>
+          <li>Local SEO (Google Business Profile, maps, NAP consistency)</li>
+          <li>Content strategy & optimization for rankings</li>
+          <li>
+            Analytics & reporting using GA4, Search Console & SEMrush
+          </li>
+        </ul>
+      </>
+    ),
     link: "/projects/seo",
   },
   {
     badge: "GD",
     title: "Graphic Design",
-    description:
-      "Creative graphic design services for branding, digital ads, and print media. Professional visuals that communicate your message and build strong brand identity.",
+    description: (
+      <>
+        <p>
+          Creative design services for branding, digital ads, and print media.
+          Delivering visuals that communicate and convert.
+        </p>
+        <ul className="list-disc list-inside mt-2 text-sm text-orange-100/80 space-y-1">
+          <li>Designed social media campaigns</li>
+          <li>Created branding assets & logos</li>
+          <li>Developed marketing materials (flyers, posters, banners)</li>
+        </ul>
+      </>
+    ),
     link: "/projects/graphic-design",
   },
 ];
@@ -35,28 +87,62 @@ const services = [
 const makeVariants = (reduce) => {
   if (reduce) {
     return {
-      page: { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.2 } } },
-      container: { hidden: {}, visible: { transition: { staggerChildren: 0.05 } } },
-      heading: { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.2 } } },
-      text: { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.2 } } },
-      card: { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.2 } } },
-      cta: { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.2 } } },
+      page: {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { duration: 0.2 } },
+      },
+      container: {
+        hidden: {},
+        visible: { transition: { staggerChildren: 0.05 } },
+      },
+      heading: {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { duration: 0.2 } },
+      },
+      text: {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { duration: 0.2 } },
+      },
+      card: {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { duration: 0.2 } },
+      },
+      cta: {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { duration: 0.2 } },
+      },
     };
   }
 
   return {
     page: {
       hidden: { opacity: 0, scale: 0.98, filter: "blur(4px)" },
-      visible: { opacity: 1, scale: 1, filter: "blur(0px)", transition: { duration: 0.35, ease: "easeOut" } },
+      visible: {
+        opacity: 1,
+        scale: 1,
+        filter: "blur(0px)",
+        transition: { duration: 0.35, ease: "easeOut" },
+      },
     },
-    container: { hidden: {}, visible: { transition: { staggerChildren: 0.08 } } },
+    container: {
+      hidden: {},
+      visible: { transition: { staggerChildren: 0.08 } },
+    },
     heading: {
       hidden: { opacity: 0, y: -16 },
-      visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.35, ease: "easeOut" },
+      },
     },
     text: {
       hidden: { opacity: 0, y: -8 },
-      visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.3, ease: "easeOut" },
+      },
     },
     card: {
       hidden: { opacity: 0, y: 20, scale: 0.985 },
@@ -64,12 +150,22 @@ const makeVariants = (reduce) => {
         opacity: 1,
         y: 0,
         scale: 1,
-        transition: { duration: 0.35, type: "spring", stiffness: 420, damping: 26, mass: 0.8 },
+        transition: {
+          duration: 0.35,
+          type: "spring",
+          stiffness: 420,
+          damping: 26,
+          mass: 0.8,
+        },
       },
     },
     cta: {
       hidden: { opacity: 0, y: 6 },
-      visible: { opacity: 1, y: 0, transition: { duration: 0.25, ease: "easeOut" } },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.25, ease: "easeOut" },
+      },
     },
   };
 };
@@ -83,9 +179,9 @@ const Services = () => {
       className="min-h-screen flex flex-col bg-gradient-to-r from-black text-orange-100 font-['Karla']"
       variants={page}
       initial="hidden"
-      animate="visible" // animate immediately on mount
+      animate="visible"
     >
-      {/* Wrapper for max width & tighter padding */}
+      {/* Wrapper */}
       <motion.div
         className="w-full max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-10"
         variants={container}
@@ -126,13 +222,17 @@ const Services = () => {
               </div>
 
               {/* Title */}
-              <h3 className="text-xl font-semibold text-orange-100 mb-2">{serv.title}</h3>
+              <h3 className="text-xl font-semibold text-orange-100 mb-2">
+                {serv.title}
+              </h3>
 
               {/* Description */}
-              <p className="text-orange-100/90 text-base leading-relaxed mb-4">{serv.description}</p>
+              <div className="text-orange-100/90 text-base leading-relaxed mb-4">
+                {serv.description}
+              </div>
 
               {/* CTA Button */}
-              <motion.a
+              {/* <motion.a
                 href={serv.link}
                 variants={cta}
                 whileHover={!reduce ? { scale: 1.04 } : undefined}
@@ -141,7 +241,7 @@ const Services = () => {
                 aria-label={`View projects for ${serv.title}`}
               >
                 View Projects
-              </motion.a>
+              </motion.a> */}
             </motion.div>
           ))}
         </motion.div>
