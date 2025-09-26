@@ -27,6 +27,14 @@ export default function Projects() {
         transition={{ duration: 0.8, delay: 0.2, type: "spring" }}
       />
 
+       {/* SEO Services */}
+      <h3 className="text-2xl font-semibold text-center mb-6">SEO Services</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-12">
+        {seoProjects.map((proj, i) => (
+          <ProjectCard proj={proj} i={i} key={i} />
+        ))}
+      </div>
+
       {/* Web Development Projects */}
       <h3 className="text-2xl font-semibold text-center mb-6">Web Development Projects</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-12">
@@ -35,28 +43,18 @@ export default function Projects() {
         ))}
       </div>
 
-      {/* SEO Services */}
-      <h3 className="text-2xl font-semibold text-center mb-6">SEO Services</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-12">
-        {seoProjects.map((proj, i) => (
-          <ProjectCard proj={proj} i={i} key={i} />
-        ))}
-      </div>
-
+     
       {/* Graphic Design Projects */}
       <h3 className="text-2xl font-semibold text-center mb-6">Graphic Design Projects</h3>
-      <div className="flex flex-wrap justify-center gap-6 mb-12">
+      <div className="columns-1 sm:columns-2 md:columns-3 gap-4 p-4">
         {designProjects.map((proj, i) => (
-          <div
-            key={i}
-            className="w-100 h-100 rounded-xl overflow-hidden bg-black flex items-center justify-center border border-white/10 shadow-xl"
-          >
-            <img
-              src={proj.image}
-              alt={proj.title}
-              className="object-cover w-full h-full"
-            />
-          </div>
+          <div key={i} className="mb-4 rounded-xl overflow-hidden border border-white/10 shadow-lg">
+              <img
+                src={proj.image}
+                alt={proj.title || "Graphic design project"}
+                className="w-full h-auto object-cover"
+              />
+            </div>
         ))}
       </div>
     </motion.div>
@@ -199,15 +197,15 @@ const webProjects = [
   },
   {
     title: "Portfolio",
-    description: "A weather forecasting app using OpenWeatherMap API.",
+    description: "A responsive web application showcasing skills in web development and digital marketing.",
     image: "/Portfolio2.png",
     link: "https://example.com/weather"
   },
   {
-    title: "Chat Application",
-    description: "A real-time chat app built with Socket.io.",
-    image: "/Soon.png",
-    link: "./"
+    title: "Portfolio",
+    description: "A minimalist portfolio demonstrating expertise in SEO optimization and web strategy, highlighting the ability to improve website engagement through SEO techniques",
+    image: "/BRP.png",
+    link: "https://brian-mokaya-git-main-segeras-projects.vercel.app/"
   },
   {
     title: "Mercedez Benz Website",
@@ -404,6 +402,28 @@ const seoProjects = [
     bounceRate: { value: "29.73%", change: "n/a" }
   }
 },
+
+  {
+    title: "Nairobi Phones Technologies",
+    description: "On-page and off-page SEO optimization for websites.",
+    image: "/NPT.png",
+    link: "https://nairobiphonestech.com/",
+    siteName: "nairobicamerahouse.co.ke",
+    stats: {
+      visits: {
+        value: "5.5K",
+        change: "+95.24%",
+        devices: { desktop: "40.37%", mobile: "59.63%" }
+      },
+      uniqueVisitors: { value: "4.9K", change: "+109.43%" },
+      conversion: { value: "1.07%", change: "+100%" },
+      pagesPerVisit: { value: "1.7", change: "-27.08%" },
+      avgVisitDuration: { value: "05:39", change: "-41.15%" },
+      bounceRate: { value: "56.49%", change: "-9.19%" }
+    }
+  },
+
+
 {
   title: "Nairobi Computers Analytics",
   description: "THE WEBSITE IS UNDER TESTING, NO ANALYTICS AT THE MOMENT.",
@@ -418,27 +438,27 @@ const seoProjects = [
 // ✅ Design Projects
 const designProjects = [
   {
-    title: "Portfolio Graphic",
+    title: "Chai Kweli",
     description: "A graphic design showcase for portfolio branding.",
-    image: "/Soon.png",
+    image: "/GDP/chaikweli.png",
     link: "./"
   },
   {
     title: "Portfolio Graphic",
     description: "A graphic design showcase for portfolio branding.",
-    image: "/Soon.png",
+    image: "/GDP/soukous.png",
     link: "./"
   },
   {
     title: "Portfolio Graphic",
     description: "A graphic design showcase for portfolio branding.",
-    image: "/Soon.png",
+    image: "/GDP/BEATTHEHEAT.png",
     link: "./"
   },
   {
     title: "Portfolio Graphic",
     description: "A graphic design showcase for portfolio branding.",
-    image: "/Soon.png",
+    image: "public/GDP/RedandWhite.png",
     link: "./"
   },
   {
