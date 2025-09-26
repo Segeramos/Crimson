@@ -2,49 +2,63 @@ import { about, skills } from "../data";
 import { FaGoogle, FaLaptopCode } from "react-icons/fa";
 import { motion } from "framer-motion";
 
-// Certification data
+// Certification data with new photo property
 const certifications = [
   {
     name: 'Front-End Web Development',
     issuer: 'ALX',
     link: 'https://savanna.alxafrica.com/certificates/CE8B5fFhN7',
-    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuu4n2VgSLyv70udhzHGObeyK8CrxZi9YBNQ&s'
+    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuu4n2VgSLyv70udhzHGObeyK8CrxZi9YBNQ&s',
+    photo: 'public/Certificate/69-front-end-web-development-certificate-segera-amos (3).png'
   },
   {
     name: 'Professional Foundations',
     issuer: 'ALX',
     link: 'https://savanna.alxafrica.com/certificates/9e2BSs5Zhc',
-    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuu4n2VgSLyv70udhzHGObeyK8CrxZi9YBNQ&s'
+    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuu4n2VgSLyv70udhzHGObeyK8CrxZi9YBNQ&s',
+    photo: 'public/Certificate/52-professional-foundations-certificate-segera-amos (4).png'
   },
   {
     name: 'Graphic Design',
     issuer: 'ALX',
     link: 'https://www.freecodecamp.org/certification/yourusername/responsive-web-design',
-    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuu4n2VgSLyv70udhzHGObeyK8CrxZi9YBNQ&s'
+    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuu4n2VgSLyv70udhzHGObeyK8CrxZi9YBNQ&s',
+    photo: 'public/Certificate/113-alx-ai-starter-kit-certificate-amos-segera (1).png'
   },
   {
     name: 'ALX AI Starter Kit',
     issuer: 'ALX',
     link: 'https://savanna.alxafrica.com/certificates/cny5pJFxzr',
-    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuu4n2VgSLyv70udhzHGObeyK8CrxZi9YBNQ&s'
+    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuu4n2VgSLyv70udhzHGObeyK8CrxZi9YBNQ&s',
+    photo: 'public/Certificate/113-alx-ai-starter-kit-certificate-amos-segera (1).png'
   },
   {
     name: 'Digital Marketing',
     issuer: 'Udemy',
-    link: 'https://alison.com/',
-    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAGllHM_06tkceB-8rg2x8PV1yK52frVK0CQ&s'
+    link: '',
+    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAGllHM_06tkceB-8rg2x8PV1yK52frVK0CQ&s',
+    photo: 'public/Certificate/UC-b6e2e440-a9aa-4833-b055-07a72e0c8f08.jpg'
   },
    {
+    name: 'Professional Foundations 2',
+    issuer: 'ALX',
+    link: '',
+    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuu4n2VgSLyv70udhzHGObeyK8CrxZi9YBNQ&s',
+    photo: 'public/Certificate/89-professional-foundations-certificate-amos-segera.png'
+  },
+  {
     name: 'Diploma in Cascading Style Sheets using HTML',
     issuer: 'Alison',
     link: 'https://alison.com/',
-    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhxRVQiSshFrxBadKsEOw6-cMeG22azmZm_oSOp2PM3I8zVg_bV5CuY_d6N74jRaperlE&usqp=CAU'
+    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhxRVQiSshFrxBadKsEOw6-cMeG22azmZm_oSOp2PM3I8zVg_bV5CuY_d6N74jRaperlE&usqp=CAU',
+    photo: '/certificates/css-html.jpg'
   },
-   {
-    name: 'CSS and JavaScript - Creating a Single Page Flexbox Website',
+    {
+    name: 'Diploma in Cascading Style Sheets using HTML',
     issuer: 'Alison',
-    link: 'https://savanna.alxafrica.com/certificates/cny5pJFxzr',
-    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhxRVQiSshFrxBadKsEOw6-cMeG22azmZm_oSOp2PM3I8zVg_bV5CuY_d6N74jRaperlE&usqp=CAU'
+    link: 'https://alison.com/',
+    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhxRVQiSshFrxBadKsEOw6-cMeG22azmZm_oSOp2PM3I8zVg_bV5CuY_d6N74jRaperlE&usqp=CAU',
+    photo: '/certificates/css-html.jpg'
   }
 
 ];
@@ -80,56 +94,51 @@ const containerStagger = {
 export default function About() {
   return (
     <motion.div
-      className="min-h-screen bg-gradient-to-r from-black py-16 px-4 sm:px-6 md:px-8 lg:px-12 text-orange-100 relative "
+      className="min-h-screen bg-gradient-to-r from-black py-16 px-4 sm:px-6 md:px-8 lg:px-12 text-orange-100 relative"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.1 }}
     >
       {/* Work Background */}
       <motion.div
-        className="flex flex-col gap-12 mb-8  "
+        className="flex flex-col gap-12 mb-8"
         initial="hidden"
         animate="visible"
         variants={containerStagger}
       >
-        <div className="space-y-6 ">
-            <div className="w-full flex justify-center">
-              <motion.h3
-                className="text-2xl font-semibold text-orange-100 flex items-center gap-2"
-                variants={fadeUp}
-                custom={0}
-              >
-                💼 Work Background
-              </motion.h3>
-            </div>
+        <div className="space-y-6">
+          <div className="w-full flex justify-center">
+            <motion.h3
+              className="text-2xl font-semibold text-orange-100 flex items-center gap-2"
+              variants={fadeUp}
+              custom={0}
+            >
+              💼 Work Background
+            </motion.h3>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center py-8">
-            {/* Each Work Card */}
-            {[
-              {
-                company: "Rondamo Technologies",
-                logo: "/RT.png",
-                role: "Digital Marketing (SEO)",
-                dates: "May 2023 - May 2024",
-                description: "I worked on SEO-driven digital marketing, boosting traffic, rankings, and brand visibility online.",
-                bg: "bg-orange-100"
-              },
-              {
-                company: "Rondamo Technologies",
-                logo: "/RT.png",
-                role: "Sales and Marketing",
-                dates: "June 2024 to December 2024",
-                description: "Led Sales & Marketing efforts, driving revenue growth through strategy, outreach, and market research.",
-                bg: "bg-orange-200"
-              },
-              {
-                company: "Mighty Ape Technologies",
-                logo: "/MAT.png",
-                role: "Digital Marketing (SEO)",
-                dates: "January 2025 to date",
-                description: "I managed SEO strategies to increase website traffic, search rankings, and engagement.",
-                bg: "bg-orange-100"
-              }
-            ].map((job, i) => (
+            {[{
+              company: "Rondamo Technologies",
+              logo: "/RT.png",
+              role: "Digital Marketing (SEO)",
+              dates: "May 2023 - May 2024",
+              description: "I worked on SEO-driven digital marketing, boosting traffic, rankings, and brand visibility online.",
+              bg: "bg-orange-100"
+            }, {
+              company: "Rondamo Technologies",
+              logo: "/RT.png",
+              role: "Sales and Marketing",
+              dates: "June 2024 to December 2024",
+              description: "Led Sales & Marketing efforts, driving revenue growth through strategy, outreach, and market research.",
+              bg: "bg-orange-200"
+            }, {
+              company: "Mighty Ape Technologies",
+              logo: "/MAT.png",
+              role: "Digital Marketing (SEO)",
+              dates: "January 2025 to date",
+              description: "I managed SEO strategies to increase website traffic, search rankings, and engagement.",
+              bg: "bg-orange-100"
+            }].map((job, i) => (
               <motion.div
                 key={i}
                 className={`w-full ${job.bg} rounded-xl shadow p-6 border border-gray-200 text-black`}
@@ -153,7 +162,7 @@ export default function About() {
         </div>
       </motion.div>
 
-   {/* Skills & Tools */}
+      {/* Skills & Tools */}
       <motion.section
         className="mt-16 text-center"
         initial={{ opacity: 0, y: 40 }}
@@ -165,15 +174,18 @@ export default function About() {
           <span className="mr-3 text-4xl">🛠️</span> My Skills & Tools
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-left">
-          {[
-            { label: "Languages", data: skills.languages, icon: "💻" },
-            { label: "Frameworks & Libraries", data: skills.frameworks, icon: "📚" },
-            { label: "Tools & Platforms", data: skills.tools, icon: "⚙️" },
-            { label: "Soft Skills", data: skills.softSkills, icon: "🤝" },
-          ].map((category, index) => (
+          {[{
+            label: "Languages", data: skills.languages, icon: "💻"
+          }, {
+            label: "Frameworks & Libraries", data: skills.frameworks, icon: "📚"
+          }, {
+            label: "Tools & Platforms", data: skills.tools, icon: "⚙️"
+          }, {
+            label: "Soft Skills", data: skills.softSkills, icon: "🤝"
+          }].map((category, index) => (
             <motion.div
               key={category.label}
-              className="bg-white/5 rounded-lg p-4 shadow-sm hover:shadow-md transition duration-300"
+              className="bg-white/5 rounded-lg p-4 sm:p-5 shadow-sm hover:shadow-md transition duration-300"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -184,10 +196,7 @@ export default function About() {
               </h4>
               <ul className="space-y-1">
                 {category.data.map((item, i) => (
-                  <li
-                    key={i}
-                    className="hover:text-red-400 transition duration-200 pointer-cu"
-                  >
+                  <li key={i} className="hover:text-red-400 transition duration-200 pointer-cu">
                     • {item}
                   </li>
                 ))}
@@ -197,10 +206,9 @@ export default function About() {
         </div>
       </motion.section>
 
-
       {/* Certifications */}
       <motion.div
-        className="space-y-4 mt-11 text-center"
+        className="space-y-6 mt-11 text-center"
         initial="hidden"
         animate="visible"
         variants={containerStagger}
@@ -219,18 +227,35 @@ export default function About() {
               href={cert.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center border rounded-lg shadow-md p-6 hover:shadow-xl transition bg-orange-100"
+              className="relative flex flex-col items-center border rounded-lg shadow-md p-4 sm:p-6 hover:shadow-xl transition bg-orange-100"
               variants={bounceIn}
               custom={index}
               whileHover={{
-                scale: 1.08,
-                // rotate: [0, 2, -2, 2, 0],
-                boxShadow: "0 0 16px 0 #fbbf24aa"
+                scale: 1.05,
+                boxShadow: "0 0 18px 0 #fbbf24aa"
               }}
-              whileTap={{ scale: 0.55 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <img src={cert.logo} alt={cert.issuer} className="h-16 mb-4 object-contain" />
-              <h4 className="text-lg font-bold text-red-800 text-center">{cert.name}</h4>
+              {/* Logo at top-left corner */}
+              <div className="absolute top-4 left-4 w-12 h-12 bg-white rounded shadow flex items-center justify-center overflow-hidden">
+                <img
+                  src={cert.logo}
+                  alt={`${cert.issuer} logo`}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+
+              {/* Main photo */}
+              <div className="w-full h-48 mb-4 overflow-hidden rounded-lg">
+                <img
+                  src={cert.photo || cert.logo}
+                  alt={cert.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Certificate info */}
+              <h4 className="text-lg font-bold text-red-800 text-center mb-1">{cert.name}</h4>
               <p className="text-sm text-gray-600">{cert.issuer}</p>
             </motion.a>
           ))}
