@@ -9,42 +9,42 @@ const certifications = [
     issuer: 'ALX',
     link: 'https://savanna.alxafrica.com/certificates/CE8B5fFhN7',
     logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuu4n2VgSLyv70udhzHGObeyK8CrxZi9YBNQ&s',
-    photo: 'public/Certificate/69-front-end-web-development-certificate-segera-amos (3).png'
+    photo: 'FE.png'
   },
   {
     name: 'Professional Foundations',
     issuer: 'ALX',
     link: 'https://savanna.alxafrica.com/certificates/9e2BSs5Zhc',
     logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuu4n2VgSLyv70udhzHGObeyK8CrxZi9YBNQ&s',
-    photo: 'public/Certificate/52-professional-foundations-certificate-segera-amos (4).png'
+    photo: '/PF1.png'
   },
   {
     name: 'Graphic Design',
     issuer: 'ALX',
     link: 'https://www.freecodecamp.org/certification/yourusername/responsive-web-design',
     logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuu4n2VgSLyv70udhzHGObeyK8CrxZi9YBNQ&s',
-    photo: 'public/Certificate/113-alx-ai-starter-kit-certificate-amos-segera (1).png'
+    photo: '/.png'
   },
   {
     name: 'ALX AI Starter Kit',
     issuer: 'ALX',
     link: 'https://savanna.alxafrica.com/certificates/cny5pJFxzr',
     logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuu4n2VgSLyv70udhzHGObeyK8CrxZi9YBNQ&s',
-    photo: 'public/Certificate/113-alx-ai-starter-kit-certificate-amos-segera (1).png'
+    photo: '/AI.png'
   },
   {
     name: 'Digital Marketing',
     issuer: 'Udemy',
     link: '',
     logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAGllHM_06tkceB-8rg2x8PV1yK52frVK0CQ&s',
-    photo: 'public/Certificate/UC-b6e2e440-a9aa-4833-b055-07a72e0c8f08.jpg'
+    photo: '/DM.jpg'
   },
    {
     name: 'Professional Foundations 2',
     issuer: 'ALX',
     link: '',
     logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuu4n2VgSLyv70udhzHGObeyK8CrxZi9YBNQ&s',
-    photo: 'public/Certificate/89-professional-foundations-certificate-amos-segera.png'
+    photo: '/PF2.png'
   },
   {
     name: 'Diploma in Cascading Style Sheets using HTML',
