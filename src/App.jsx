@@ -142,6 +142,7 @@ import Projects from "./components/Projects";
 import Services from "./components/Services";
 import Contact from "./components/Contact";
 import Blog from "./components/Blog";
+import Admin from "./pages/Admin";
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -240,6 +241,7 @@ export default function App() {
               <Route path="/services" element={<Services />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/blog" element={<Blog />} /> {/* <-- Add your Blog route here */}
+              <Route path="/admin" element={<Admin />} />
             </Routes>
           </main>
         </div>
