@@ -13,7 +13,7 @@ const services = [
           devices.
         </p>
         <ul className="list-disc list-inside mt-2 text-sm text-orange-100/80 space-y-1">
-          <li>Crafted modern UI layouts in Figma</li>
+          <li>Crafted modern UI layouts in Figma & Canva</li>
           <li>Responsive design for mobile-first performance</li>
           <li>Optimized load speed & navigation flow</li>
         </ul>
@@ -31,7 +31,7 @@ const services = [
           React, JavaScript, Tailwind CSS, and Node.js.
         </p>
         <ul className="list-disc list-inside mt-2 text-sm text-orange-100/80 space-y-1">
-          <li>Developed e-commerce platforms with secure checkout</li>
+          <li>Developed personal projects </li>
           <li>Integrated APIs for payments & data fetching</li>
           <li>Followed clean, maintainable code practices</li>
         </ul>

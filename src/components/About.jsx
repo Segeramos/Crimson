@@ -29,11 +29,17 @@ const certifications = [
     logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuu4n2VgSLyv70udhzHGObeyK8CrxZi9YBNQ&s'
   },
   {
-    name: 'Digital Marketing',
-    issuer: 'Udemy',
-    link: 'https://alison.com/',
-    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAGllHM_06tkceB-8rg2x8PV1yK52frVK0CQ&s'
-  },
+  name: 'Digital Marketing',
+  issuer: 'Udemy',
+  logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAGllHM_06tkceB-8rg2x8PV1yK52frVK0CQ&s',
+  image: (
+    <img
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAGllHM_06tkceB-8rg2x8PV1yK52frVK0CQ&s"
+      alt="Udemy Digital Marketing Certificate"
+      className="w-16 h-16 rounded-md shadow-md object-contain"
+    />
+  ),
+},
    {
     name: 'Diploma in Cascading Style Sheets using HTML',
     issuer: 'Alison',
@@ -43,7 +49,7 @@ const certifications = [
    {
     name: 'CSS and JavaScript - Creating a Single Page Flexbox Website',
     issuer: 'Alison',
-    link: 'https://savanna.alxafrica.com/certificates/cny5pJFxzr',
+    link: 'https://alison.com/',
     logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhxRVQiSshFrxBadKsEOw6-cMeG22azmZm_oSOp2PM3I8zVg_bV5CuY_d6N74jRaperlE&usqp=CAU'
   }
 
@@ -125,10 +131,31 @@ export default function About() {
                 company: "Mighty Ape Technologies",
                 logo: "/MAT.png",
                 role: "Digital Marketing (SEO)",
-                dates: "January 2025 to date",
+                dates: "January 2025 to January 2026",
                 description: "I managed SEO strategies to increase website traffic, search rankings, and engagement.",
                 bg: "bg-orange-100"
+              },
+              {
+                company: "",
+                logo: "",
+                role: "Font-end Web-devoloper (volontier)",
+                dates: "February 2026",
+                description: (
+                          <>
+                            Working on personal projects such as{" "}
+                            <a
+                              href="https://nairobimart.vercel.app"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-500 underline"
+                            >
+                              NairobiMart
+                            </a>
+                          </>
+                        ),
+                bg: "bg-orange-200"
               }
+
             ].map((job, i) => (
               <motion.div
                 key={i}
