@@ -18,11 +18,20 @@ const TAB_LABELS = {
   blog:           "Blog Posts",
 };
 
+const TAB_ICONS = {
+  webProjects:    "◈",
+  seoProjects:    "◎",
+  designProjects: "◻",
+  skills:         "▲",
+  blog:           "✦",
+};
+
 export default function Admin() {
-  const [tab, setTab]   = useState("webProjects");
-  const [data, setData] = useState({ webProjects: [], seoProjects: [], designProjects: [], skills: [], blog: [] });
-  const [modal, setModal] = useState(null);
-  const [form, setForm]   = useState({});
+  const [tab, setTab]         = useState("webProjects");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [data, setData]       = useState({ webProjects: [], seoProjects: [], designProjects: [], skills: [], blog: [] });
+  const [modal, setModal]     = useState(null);
+  const [form, setForm]       = useState({});
 
   useEffect(() => {
     const unsubs = TABS.map(col => {
@@ -42,16 +51,11 @@ export default function Admin() {
     const { type, item } = modal;
     const payload = { ...form };
     if (type === "blog" && !payload.status) payload.status = "draft";
-
-    // Parse level as number for skills
     if (type === "skills" && payload.level) payload.level = parseInt(payload.level);
-
-    // Parse nested stats JSON for SEO projects
     if (type === "seoProjects" && payload.statsRaw) {
       try { payload.stats = JSON.parse(payload.statsRaw); } catch(e) {}
       delete payload.statsRaw;
     }
-
     if (item) {
       await updateDoc(doc(db, type, item.id), payload);
     } else {
@@ -79,181 +83,362 @@ export default function Admin() {
   const items = data[tab] || [];
 
   return (
-    <div style={{ minHeight:"100vh", background:"#0a0a0a", color:"#fed7aa", display:"flex" }}>
+    <>
+      <style>{`
+        * { box-sizing: border-box; }
+        .admin-wrap { min-height: 100vh; background: #0a0a0a; color: #fed7aa; display: flex; flex-direction: column; }
 
-      {/* Sidebar */}
-      <aside style={{ width:200, background:"#0f0f0f", padding:"1.5rem 1rem", borderRight:"1px solid #1f1f1f", flexShrink:0 }}>
-        <div style={{ color:"#f97316", fontWeight:600, fontSize:15, marginBottom:"1.5rem" }}>⬡ Portfolio CMS</div>
-        {TABS.map(t => (
-          <button key={t} onClick={() => setTab(t)} style={{
-            display:"block", width:"100%", textAlign:"left",
-            padding:"8px 12px", borderRadius:8, border:"none",
-            background: tab===t ? "#1f1f1f" : "transparent",
-            color: tab===t ? "#f97316" : "#a8a8a8",
-            cursor:"pointer", fontSize:13, marginBottom:4,
-          }}>
-            {TAB_LABELS[t]}
-          </button>
-        ))}
-      </aside>
+        /* Top navbar (mobile) */
+        .topnav {
+          display: flex; align-items: center; justify-content: space-between;
+          background: #0f0f0f; padding: 14px 16px;
+          border-bottom: 1px solid #1f1f1f; position: sticky; top: 0; z-index: 50;
+        }
+        .topnav-brand { color: #f97316; font-weight: 700; font-size: 15px; }
+        .hamburger {
+          background: transparent; border: 1px solid #2a2a2a; border-radius: 8px;
+          color: #a8a8a8; padding: 6px 10px; cursor: pointer; font-size: 18px;
+          display: flex; align-items: center; justify-content: center;
+        }
 
-      {/* Main */}
-      <main style={{ flex:1, padding:"2rem", overflowY:"auto" }}>
-        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"1.5rem" }}>
-          <h1 style={{ fontSize:20, fontWeight:600 }}>{TAB_LABELS[tab]}</h1>
-          <button onClick={() => openAdd(tab)} style={S.addBtn}>+ Add item</button>
+        /* Drawer */
+        .drawer-overlay {
+          position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 60;
+        }
+        .drawer {
+          position: fixed; top: 0; left: 0; bottom: 0; width: 240px;
+          background: #0f0f0f; padding: 1.5rem 1rem; z-index: 70;
+          border-right: 1px solid #1f1f1f; transform: translateX(-100%);
+          transition: transform 0.25s ease;
+        }
+        .drawer.open { transform: translateX(0); }
+        .drawer-brand { color: #f97316; font-weight: 700; font-size: 15px; margin-bottom: 1.5rem; }
+        .drawer-close {
+          position: absolute; top: 14px; right: 14px;
+          background: transparent; border: none; color: #a8a8a8; font-size: 20px; cursor: pointer;
+        }
+        .nav-item {
+          display: flex; align-items: center; gap: 10px;
+          width: 100%; text-align: left; padding: 10px 12px;
+          border-radius: 10px; border: none; background: transparent;
+          color: #a8a8a8; cursor: pointer; font-size: 14px; margin-bottom: 4px;
+          transition: all 0.15s;
+        }
+        .nav-item.active { background: #1f1f1f; color: #f97316; font-weight: 600; }
+        .nav-icon { font-size: 16px; width: 20px; text-align: center; }
+
+        /* Desktop sidebar */
+        .sidebar {
+          display: none; width: 220px; background: #0f0f0f;
+          padding: 1.5rem 1rem; border-right: 1px solid #1f1f1f; flex-shrink: 0;
+        }
+        .sidebar-brand { color: #f97316; font-weight: 700; font-size: 15px; margin-bottom: 1.5rem; }
+
+        /* Main */
+        .main-content { flex: 1; padding: 1.25rem; overflow-y: auto; }
+
+        /* Tab pills (mobile quick-switch) */
+        .tab-pills {
+          display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px;
+          margin-bottom: 1.25rem; scrollbar-width: none;
+        }
+        .tab-pills::-webkit-scrollbar { display: none; }
+        .tab-pill {
+          flex-shrink: 0; padding: 6px 14px; border-radius: 20px; border: 1px solid #2a2a2a;
+          background: transparent; color: #a8a8a8; font-size: 12px; cursor: pointer;
+          white-space: nowrap; transition: all 0.15s;
+        }
+        .tab-pill.active { background: #c2410c; color: #fff; border-color: #c2410c; font-weight: 600; }
+
+        /* Page header */
+        .page-header {
+          display: flex; align-items: center; justify-content: space-between;
+          margin-bottom: 1.25rem; gap: 8px;
+        }
+        .page-title { font-size: 18px; font-weight: 600; }
+        .add-btn {
+          background: #c2410c; color: #fff; border: none; border-radius: 10px;
+          padding: 9px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
+          white-space: nowrap; flex-shrink: 0;
+        }
+
+        /* Cards */
+        .cards-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        .card {
+          background: #141414; border: 1px solid #1f1f1f; border-radius: 14px;
+          padding: 1rem; overflow: hidden;
+        }
+        .card-img { width: 100%; height: 110px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
+        .card-tag { font-size: 11px; color: #f97316; font-weight: 600; margin-bottom: 5px; text-transform: capitalize; }
+        .card-title { font-size: 15px; font-weight: 600; color: #fed7aa; margin-bottom: 5px; }
+        .card-desc { font-size: 12px; color: #888; line-height: 1.5; margin-bottom: 8px; }
+        .card-link { font-size: 11px; color: #f97316; display: block; margin-bottom: 8px; word-break: break-all; }
+        .card-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+        .icon-btn {
+          border: 1px solid #2a2a2a; border-radius: 8px; background: transparent;
+          color: #a8a8a8; font-size: 12px; padding: 6px 12px; cursor: pointer;
+        }
+        .icon-btn.del { color: #dc2626; }
+
+        /* Skills */
+        .skill-row {
+          padding: 12px 0; border-bottom: 1px solid #1a1a1a;
+          display: flex; flex-direction: column; gap: 6px;
+        }
+        .skill-row-top { display: flex; justify-content: space-between; align-items: center; }
+        .skill-name { font-size: 14px; font-weight: 500; }
+        .skill-cat { font-size: 11px; color: #888; }
+        .skill-pct { font-size: 12px; color: #a8a8a8; }
+        .bar-bg { width: 100%; height: 6px; background: #1f1f1f; border-radius: 4px; }
+        .bar-fill { height: 6px; background: #c2410c; border-radius: 4px; }
+        .skill-actions { display: flex; gap: 8px; margin-top: 4px; }
+
+        /* Blog */
+        .blog-row {
+          background: #141414; border: 1px solid #1f1f1f; border-radius: 12px;
+          padding: 1rem; margin-bottom: 10px;
+        }
+        .blog-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+        .blog-date { font-size: 11px; color: #666; }
+        .badge-live { font-size: 10px; background: #14532d; color: #86efac; padding: 2px 8px; border-radius: 20px; }
+        .badge-draft { font-size: 10px; background: #713f12; color: #fde68a; padding: 2px 8px; border-radius: 20px; }
+        .blog-title { font-size: 15px; font-weight: 600; color: #fed7aa; margin-bottom: 4px; }
+        .blog-excerpt { font-size: 12px; color: #888; margin-bottom: 10px; }
+
+        /* Empty */
+        .empty { color: #555; font-size: 13px; padding: 2rem 0; text-align: center; }
+
+        /* Modal */
+        .overlay {
+          position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+          display: flex; align-items: flex-end; justify-content: center; z-index: 100;
+        }
+        .modal-sheet {
+          background: #141414; border: 1px solid #2a2a2a;
+          border-radius: 20px 20px 0 0; padding: 1.5rem;
+          width: 100%; max-width: 540px; max-height: 90vh; overflow-y: auto;
+        }
+        .modal-handle {
+          width: 40px; height: 4px; background: #2a2a2a; border-radius: 4px;
+          margin: 0 auto 1.25rem;
+        }
+        .modal-title { font-size: 16px; font-weight: 600; color: #fed7aa; margin-bottom: 1.25rem; text-transform: capitalize; }
+        .form-group { margin-bottom: 12px; }
+        .form-label { font-size: 12px; color: #a8a8a8; display: block; margin-bottom: 4px; }
+        .form-input {
+          width: 100%; padding: 10px 12px; border-radius: 10px; font-size: 14px;
+          border: 1px solid #2a2a2a; background: #0f0f0f; color: #fed7aa;
+          outline: none; resize: vertical;
+        }
+        .form-input:focus { border-color: #f97316; }
+        .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
+        .btn-cancel {
+          border: 1px solid #2a2a2a; background: transparent; color: #a8a8a8;
+          border-radius: 10px; padding: 10px 18px; font-size: 13px; cursor: pointer;
+        }
+        .btn-save {
+          background: #c2410c; color: #fff; border: none;
+          border-radius: 10px; padding: 10px 18px; font-size: 13px; font-weight: 600; cursor: pointer;
+        }
+
+        /* Desktop breakpoint */
+        @media (min-width: 768px) {
+          .admin-wrap { flex-direction: row; }
+          .topnav { display: none; }
+          .tab-pills { display: none; }
+          .sidebar { display: flex; flex-direction: column; }
+          .main-content { padding: 2rem; }
+          .cards-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+          .overlay { align-items: center; }
+          .modal-sheet { border-radius: 16px; margin-bottom: 0; }
+          .modal-handle { display: none; }
+          .skill-row { flex-direction: row; align-items: center; gap: 12px; }
+          .skill-row-top { flex-direction: column; align-items: flex-start; min-width: 130px; gap: 2px; }
+          .bar-bg { flex: 1; }
+          .skill-actions { margin-top: 0; }
+        }
+      `}</style>
+
+      <div className="admin-wrap">
+
+        {/* Mobile top nav */}
+        <nav className="topnav">
+          <span className="topnav-brand">⬡ Portfolio CMS</span>
+          <button className="hamburger" onClick={() => setMenuOpen(true)}>☰</button>
+        </nav>
+
+        {/* Mobile drawer */}
+        {menuOpen && <div className="drawer-overlay" onClick={() => setMenuOpen(false)} />}
+        <div className={`drawer ${menuOpen ? "open" : ""}`}>
+          <div className="drawer-brand">⬡ Portfolio CMS</div>
+          <button className="drawer-close" onClick={() => setMenuOpen(false)}>✕</button>
+          {TABS.map(t => (
+            <button key={t} className={`nav-item ${tab === t ? "active" : ""}`}
+              onClick={() => { setTab(t); setMenuOpen(false); }}>
+              <span className="nav-icon">{TAB_ICONS[t]}</span>
+              {TAB_LABELS[t]}
+            </button>
+          ))}
         </div>
 
-        {/* Project / Design cards grid */}
-        {["webProjects","seoProjects","designProjects"].includes(tab) && (
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))", gap:16 }}>
-            {items.map(p => (
-              <div key={p.id} style={S.card}>
-                {p.image && <img src={p.image} alt={p.title} style={{ width:"100%", height:120, objectFit:"cover", borderRadius:8, marginBottom:10 }} />}
-                <div style={S.tag}>{p.stack || tab.replace("Projects","")}</div>
-                <div style={S.cardTitle}>{p.title}</div>
-                <div style={S.cardDesc}>{p.description}</div>
-                {p.link && <a href={p.link} target="_blank" rel="noreferrer" style={{ fontSize:11, color:"#f97316", marginTop:4, display:"block" }}>{p.link}</a>}
-                <div style={S.actions}>
-                  <button style={S.iconBtn} onClick={() => openEdit(tab, p)}>Edit</button>
-                  <button style={{ ...S.iconBtn, ...S.del }} onClick={() => handleDelete(tab, p.id)}>Delete</button>
-                </div>
-              </div>
+        {/* Desktop sidebar */}
+        <aside className="sidebar">
+          <div className="sidebar-brand">⬡ Portfolio CMS</div>
+          {TABS.map(t => (
+            <button key={t} className={`nav-item ${tab === t ? "active" : ""}`}
+              onClick={() => setTab(t)}>
+              <span className="nav-icon">{TAB_ICONS[t]}</span>
+              {TAB_LABELS[t]}
+            </button>
+          ))}
+        </aside>
+
+        {/* Main */}
+        <main className="main-content">
+
+          {/* Mobile tab pills */}
+          <div className="tab-pills">
+            {TABS.map(t => (
+              <button key={t} className={`tab-pill ${tab === t ? "active" : ""}`}
+                onClick={() => setTab(t)}>
+                {TAB_ICONS[t]} {TAB_LABELS[t]}
+              </button>
             ))}
-            {items.length === 0 && <div style={S.empty}>No items yet.</div>}
           </div>
-        )}
 
-        {/* Skills */}
-        {tab === "skills" && (
-          <div>
-            {items.map(s => (
-              <div key={s.id} style={S.skillRow}>
-                <span style={{ minWidth:130, fontSize:14 }}>{s.name}</span>
-                <span style={{ fontSize:12, color:"#888", minWidth:80 }}>{s.category}</span>
-                <div style={S.barBg}><div style={{ ...S.bar, width:`${s.level}%` }} /></div>
-                <span style={{ fontSize:12, color:"#a8a8a8", minWidth:40, textAlign:"right" }}>{s.level}%</span>
-                <button style={{ ...S.iconBtn, marginLeft:8 }} onClick={() => openEdit("skills", s)}>Edit</button>
-                <button style={{ ...S.iconBtn, ...S.del }} onClick={() => handleDelete("skills", s.id)}>Del</button>
-              </div>
-            ))}
-            {items.length === 0 && <div style={S.empty}>No skills yet.</div>}
+          <div className="page-header">
+            <h1 className="page-title">{TAB_LABELS[tab]}</h1>
+            <button className="add-btn" onClick={() => openAdd(tab)}>+ Add item</button>
           </div>
-        )}
 
-        {/* Blog */}
-        {tab === "blog" && (
-          <div>
-            {items.map(b => (
-              <div key={b.id} style={S.blogRow}>
-                <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:4 }}>
-                  <span style={{ fontSize:11, color:"#666" }}>{b.date}</span>
-                  <span style={b.status==="live" ? S.live : S.draft}>{b.status||"draft"}</span>
+          {/* Project cards */}
+          {["webProjects","seoProjects","designProjects"].includes(tab) && (
+            <div className="cards-grid">
+              {items.map(p => (
+                <div key={p.id} className="card">
+                  {p.image && <img src={p.image} alt={p.title} className="card-img" />}
+                  <div className="card-tag">{p.stack || tab.replace("Projects","")}</div>
+                  <div className="card-title">{p.title}</div>
+                  <div className="card-desc">{p.description}</div>
+                  {p.link && <a href={p.link} target="_blank" rel="noreferrer" className="card-link">{p.link}</a>}
+                  <div className="card-actions">
+                    <button className="icon-btn" onClick={() => openEdit(tab, p)}>Edit</button>
+                    <button className="icon-btn del" onClick={() => handleDelete(tab, p.id)}>Delete</button>
+                  </div>
                 </div>
-                <div style={S.cardTitle}>{b.title}</div>
-                <div style={S.cardDesc}>{b.excerpt}</div>
-                <div style={S.actions}>
-                  <button style={S.iconBtn} onClick={() => openEdit("blog", b)}>Edit</button>
-                  <button style={{ ...S.iconBtn, ...S.del }} onClick={() => handleDelete("blog", b.id)}>Delete</button>
-                  <button style={S.iconBtn} onClick={() => togglePublish(b)}>
-                    {b.status === "live" ? "Unpublish" : "Publish"}
-                  </button>
+              ))}
+              {items.length === 0 && <div className="empty">No items yet.</div>}
+            </div>
+          )}
+
+          {/* Skills */}
+          {tab === "skills" && (
+            <div>
+              {items.map(s => (
+                <div key={s.id} className="skill-row">
+                  <div className="skill-row-top">
+                    <span className="skill-name">{s.name}</span>
+                    <span className="skill-cat">{s.category}</span>
+                  </div>
+                  <div className="bar-bg"><div className="bar-fill" style={{ width:`${s.level}%` }} /></div>
+                  <span className="skill-pct">{s.level}%</span>
+                  <div className="skill-actions">
+                    <button className="icon-btn" onClick={() => openEdit("skills", s)}>Edit</button>
+                    <button className="icon-btn del" onClick={() => handleDelete("skills", s.id)}>Del</button>
+                  </div>
                 </div>
+              ))}
+              {items.length === 0 && <div className="empty">No skills yet.</div>}
+            </div>
+          )}
+
+          {/* Blog */}
+          {tab === "blog" && (
+            <div>
+              {items.map(b => (
+                <div key={b.id} className="blog-row">
+                  <div className="blog-meta">
+                    <span className="blog-date">{b.date}</span>
+                    <span className={b.status === "live" ? "badge-live" : "badge-draft"}>{b.status || "draft"}</span>
+                  </div>
+                  <div className="blog-title">{b.title}</div>
+                  <div className="blog-excerpt">{b.excerpt}</div>
+                  <div className="card-actions">
+                    <button className="icon-btn" onClick={() => openEdit("blog", b)}>Edit</button>
+                    <button className="icon-btn del" onClick={() => handleDelete("blog", b.id)}>Delete</button>
+                    <button className="icon-btn" onClick={() => togglePublish(b)}>
+                      {b.status === "live" ? "Unpublish" : "Publish"}
+                    </button>
+                  </div>
+                </div>
+              ))}
+              {items.length === 0 && <div className="empty">No posts yet.</div>}
+            </div>
+          )}
+        </main>
+
+        {/* Modal — bottom sheet on mobile, centered on desktop */}
+        {modal && (
+          <div className="overlay" onClick={closeModal}>
+            <div className="modal-sheet" onClick={e => e.stopPropagation()}>
+              <div className="modal-handle" />
+              <div className="modal-title">{modal.item ? "Edit" : "Add"} — {TAB_LABELS[modal.type]}</div>
+
+              {["webProjects","designProjects"].includes(modal.type) && <>
+                <Field label="Title"        input={<input className="form-input" {...f("title")} />} />
+                <Field label="Description"  input={<textarea className="form-input" style={{ height:70 }} {...f("description")} />} />
+                <Field label="Image path (e.g. /portfolio.png)" input={<input className="form-input" {...f("image")} />} />
+                <Field label="Live URL"     input={<input className="form-input" {...f("link")} />} />
+                {modal.type === "webProjects" &&
+                  <Field label="Tech stack" input={<input className="form-input" {...f("stack")} />} />
+                }
+              </>}
+
+              {modal.type === "seoProjects" && <>
+                <Field label="Title"        input={<input className="form-input" {...f("title")} />} />
+                <Field label="Description"  input={<textarea className="form-input" style={{ height:60 }} {...f("description")} />} />
+                <Field label="Image path"   input={<input className="form-input" {...f("image")} />} />
+                <Field label="Live URL"     input={<input className="form-input" {...f("link")} />} />
+                <Field label="Site name"    input={<input className="form-input" {...f("siteName")} />} />
+                <Field
+                  label='Stats JSON'
+                  input={<textarea className="form-input" style={{ height:120, fontFamily:"monospace", fontSize:11 }}
+                    value={form.statsRaw ?? (form.stats ? JSON.stringify(form.stats, null, 2) : "")}
+                    onChange={e => setForm(p => ({ ...p, statsRaw: e.target.value }))}
+                  />}
+                />
+              </>}
+
+              {modal.type === "skills" && <>
+                <Field label="Skill name"          input={<input className="form-input" {...f("name")} />} />
+                <Field label="Proficiency (0–100)" input={<input className="form-input" type="number" min="0" max="100" {...f("level")} />} />
+                <Field label="Category"            input={<input className="form-input" {...f("category")} />} />
+              </>}
+
+              {modal.type === "blog" && <>
+                <Field label="Title"   input={<input className="form-input" {...f("title")} />} />
+                <Field label="Excerpt" input={<textarea className="form-input" style={{ height:60 }} {...f("excerpt")} />} />
+                <Field label="Content" input={<textarea className="form-input" style={{ height:120 }} {...f("content")} />} />
+                <Field label="Date"    input={<input className="form-input" {...f("date")} />} />
+              </>}
+
+              <div className="modal-actions">
+                <button className="btn-cancel" onClick={closeModal}>Cancel</button>
+                <button className="btn-save" onClick={handleSave}>Save</button>
               </div>
-            ))}
-            {items.length === 0 && <div style={S.empty}>No posts yet.</div>}
-          </div>
-        )}
-      </main>
-
-      {/* Modal */}
-      {modal && (
-        <div style={S.overlay} onClick={closeModal}>
-          <div style={S.modalBox} onClick={e => e.stopPropagation()}>
-            <div style={S.modalTitle}>{modal.item ? "Edit" : "Add"} — {TAB_LABELS[modal.type]}</div>
-
-            {/* Web & Design project fields */}
-            {["webProjects","designProjects"].includes(modal.type) && <>
-              <Field label="Title"            input={<input style={S.input} {...f("title")} />} />
-              <Field label="Description"      input={<textarea style={{ ...S.input, height:70 }} {...f("description")} />} />
-              <Field label="Image path (e.g. /portfolio.png)" input={<input style={S.input} {...f("image")} />} />
-              <Field label="Live URL"         input={<input style={S.input} {...f("link")} />} />
-              {modal.type === "webProjects" &&
-                <Field label="Tech stack"     input={<input style={S.input} {...f("stack")} />} />
-              }
-            </>}
-
-            {/* SEO project fields */}
-            {modal.type === "seoProjects" && <>
-              <Field label="Title"            input={<input style={S.input} {...f("title")} />} />
-              <Field label="Description"      input={<textarea style={{ ...S.input, height:60 }} {...f("description")} />} />
-              <Field label="Image path"       input={<input style={S.input} {...f("image")} />} />
-              <Field label="Live URL"         input={<input style={S.input} {...f("link")} />} />
-              <Field label="Site name"        input={<input style={S.input} {...f("siteName")} />} />
-              <Field
-                label='Stats JSON (paste the stats object, e.g. {"visits":{"value":"5.5K","change":"+95%","devices":{"desktop":"40%","mobile":"60%"}},...})'
-                input={<textarea style={{ ...S.input, height:120, fontFamily:"monospace", fontSize:11 }}
-                  value={form.statsRaw ?? (form.stats ? JSON.stringify(form.stats, null, 2) : "")}
-                  onChange={e => setForm(p => ({ ...p, statsRaw: e.target.value }))}
-                />}
-              />
-            </>}
-
-            {/* Skills fields */}
-            {modal.type === "skills" && <>
-              <Field label="Skill name"           input={<input style={S.input} {...f("name")} />} />
-              <Field label="Proficiency (0–100)"  input={<input style={S.input} type="number" min="0" max="100" {...f("level")} />} />
-              <Field label="Category (e.g. Frontend, SEO)" input={<input style={S.input} {...f("category")} />} />
-            </>}
-
-            {/* Blog fields */}
-            {modal.type === "blog" && <>
-              <Field label="Title"    input={<input style={S.input} {...f("title")} />} />
-              <Field label="Excerpt"  input={<textarea style={{ ...S.input, height:60 }} {...f("excerpt")} />} />
-              <Field label="Content"  input={<textarea style={{ ...S.input, height:120 }} {...f("content")} />} />
-              <Field label="Date"     input={<input style={S.input} {...f("date")} />} />
-            </>}
-
-            <div style={{ display:"flex", gap:8, justifyContent:"flex-end", marginTop:16 }}>
-              <button style={S.cancelBtn} onClick={closeModal}>Cancel</button>
-              <button style={S.saveBtn}   onClick={handleSave}>Save</button>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }
 
 function Field({ label, input }) {
   return (
-    <div style={{ marginBottom:12 }}>
-      <label style={{ fontSize:12, color:"#a8a8a8", display:"block", marginBottom:4 }}>{label}</label>
+    <div className="form-group">
+      <label className="form-label">{label}</label>
       {input}
     </div>
   );
 }
-
-const S = {
-  addBtn:    { background:"#c2410c", color:"#fff", border:"none", borderRadius:8, padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" },
-  card:      { background:"#141414", border:"1px solid #1f1f1f", borderRadius:12, padding:"1rem 1.25rem" },
-  tag:       { fontSize:11, color:"#f97316", fontWeight:600, marginBottom:6, textTransform:"capitalize" },
-  cardTitle: { fontSize:15, fontWeight:600, marginBottom:6, color:"#fed7aa" },
-  cardDesc:  { fontSize:12, color:"#888", lineHeight:1.5 },
-  actions:   { display:"flex", gap:8, marginTop:12 },
-  iconBtn:   { border:"1px solid #2a2a2a", borderRadius:6, background:"transparent", color:"#a8a8a8", fontSize:12, padding:"4px 10px", cursor:"pointer" },
-  del:       { color:"#dc2626" },
-  skillRow:  { display:"flex", alignItems:"center", gap:12, padding:"10px 0", borderBottom:"1px solid #1a1a1a" },
-  barBg:     { flex:1, height:6, background:"#1f1f1f", borderRadius:4 },
-  bar:       { height:6, background:"#c2410c", borderRadius:4 },
-  blogRow:   { background:"#141414", border:"1px solid #1f1f1f", borderRadius:10, padding:"1rem 1.25rem", marginBottom:10 },
-  live:      { fontSize:10, background:"#14532d", color:"#86efac", padding:"2px 7px", borderRadius:20 },
-  draft:     { fontSize:10, background:"#713f12", color:"#fde68a", padding:"2px 7px", borderRadius:20 },
-  empty:     { color:"#555", fontSize:13, padding:"2rem 0" },
-  overlay:   { position:"fixed", inset:0, background:"rgba(0,0,0,0.65)", display:"flex", alignItems:"center", justifyContent:"center", zIndex:100 },
-  modalBox:  { background:"#141414", border:"1px solid #2a2a2a", borderRadius:14, padding:"1.75rem", width:480, maxWidth:"94vw", maxHeight:"90vh", overflowY:"auto" },
-  modalTitle:{ fontSize:16, fontWeight:600, marginBottom:"1.25rem", color:"#fed7aa" },
-  input:     { width:"100%", padding:"8px 10px", borderRadius:8, fontSize:13, border:"1px solid #2a2a2a", background:"#0f0f0f", color:"#fed7aa", outline:"none", resize:"vertical", boxSizing:"border-box" },
-  cancelBtn: { border:"1px solid #2a2a2a", background:"transparent", color:"#a8a8a8", borderRadius:8, padding:"8px 16px", fontSize:13, cursor:"pointer" },
-  saveBtn:   { background:"#c2410c", color:"#fff", border:"none", borderRadius:8, padding:"8px 16px", fontSize:13, fontWeight:600, cursor:"pointer" },
-};
