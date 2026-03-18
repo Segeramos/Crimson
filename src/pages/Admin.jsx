@@ -118,7 +118,7 @@ function LoginScreen({ onLogin }) {
             <button type="submit" className="login-btn">Unlock CMS</button>
           </form>
 
-          <div className="login-hint">Only you should know this URL and password.</div>
+          <div className="login-hint">Restricted access. Authorized personnel only.</div>
         </div>
       </div>
     </>

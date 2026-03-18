@@ -3,20 +3,19 @@ import { FaFilePdf, FaGithub, FaInstagram, FaLinkedinIn, FaWhatsapp, FaPhone } f
 import { FaXTwitter } from "react-icons/fa6";
 import { about } from "../data";
 import { motion } from "framer-motion";
-import Footer from "./Footer";
 import emailjs from "@emailjs/browser";
 import Toast from "./Toast";
 import ReactGA from "react-ga4";
 
-
 // Animation variants
- const handleDownload = () => {
-    ReactGA.event({
-        category: "engagement",
-        action: "download_cv",
-        label: "Download CV Button",
-    });
-    };
+const handleDownload = () => {
+  ReactGA.event({
+    category: "engagement",
+    action: "download_cv",
+    label: "Download CV Button",
+  });
+};
+
 const iconsContainer = {
   hidden: {},
   show: { transition: { staggerChildren: 0.15 } },
@@ -118,7 +117,6 @@ export default function Home() {
               onChange={(e) => setEmail(e.target.value)}
               className="hidden lg:block w-full sm:w-auto rounded-lg px-4 py-2.5 bg-orange-100 text-black focus:outline-none focus:ring-4 focus:ring-red-500 transition"
             />
-
             <a
               href="tel:+254703687830"
               className="w-full sm:w-auto bg-red-800 hover:bg-red-700 text-orange-100 rounded-lg px-4 py-2.5 font-semibold shadow-md hover:scale-105 transition inline-flex items-center justify-center space-x-2"
@@ -137,11 +135,10 @@ export default function Home() {
           >
             <a
               href="/Segera-resume.pdf"
-              onClick={handleDownload``}
-              download 
+              onClick={handleDownload}
+              download
               className="w-full sm:w-auto bg-red-800 hover:bg-red-700 text-orange-100 rounded-lg px-4 py-2.5 font-semibold shadow-md hover:scale-105 transition inline-flex items-center justify-center space-x-2"
             >
-              {/* <FaFilePdf className="text-lg" /> */}
               <span>Download My Resume</span>
             </a>
           </motion.div>
@@ -153,63 +150,19 @@ export default function Home() {
             initial="hidden"
             animate="show"
           >
-            <motion.a
-              href="https://x.com/bookie_DM?t=DWOme_6DSoI75b_vCHQGbw&s=08"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-red-600 transition"
-              variants={iconItem}
-              whileHover={{ scale: 1.25, rotate: [0, -8, 8, 0], boxShadow: "0px 4px 24px 0px #fbbf24aa", transition: { type: "spring", stiffness: 400, damping: 8 } }}
-              whileTap={{ scale: 0.93 }}
-            >
+            <motion.a href="https://x.com/bookie_DM?t=DWOme_6DSoI75b_vCHQGbw&s=08" target="_blank" rel="noopener noreferrer" className="hover:text-red-600 transition" variants={iconItem} whileHover={{ scale: 1.25, rotate: [0, -8, 8, 0], boxShadow: "0px 4px 24px 0px #fbbf24aa", transition: { type: "spring", stiffness: 400, damping: 8 } }} whileTap={{ scale: 0.93 }}>
               <FaXTwitter />
             </motion.a>
-
-            <motion.a
-              href="https://www.linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-red-600 transition"
-              variants={iconItem}
-              whileHover={{ scale: 1.25, rotate: [0, -8, 8, 0], boxShadow: "0px 4px 24px 0px #0a66c2aa", transition: { type: "spring", stiffness: 400, damping: 8 } }}
-              whileTap={{ scale: 0.93 }}
-            >
+            <motion.a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-red-600 transition" variants={iconItem} whileHover={{ scale: 1.25, rotate: [0, -8, 8, 0], boxShadow: "0px 4px 24px 0px #0a66c2aa", transition: { type: "spring", stiffness: 400, damping: 8 } }} whileTap={{ scale: 0.93 }}>
               <FaLinkedinIn />
             </motion.a>
-
-            <motion.a
-              href="https://www.instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-red-600 transition"
-              variants={iconItem}
-              whileHover={{ scale: 1.25, rotate: [0, -8, 8, 0], boxShadow: "0px 4px 24px 0px #f43f5ea0", transition: { type: "spring", stiffness: 400, damping: 8 } }}
-              whileTap={{ scale: 0.93 }}
-            >
+            <motion.a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-red-600 transition" variants={iconItem} whileHover={{ scale: 1.25, rotate: [0, -8, 8, 0], boxShadow: "0px 4px 24px 0px #f43f5ea0", transition: { type: "spring", stiffness: 400, damping: 8 } }} whileTap={{ scale: 0.93 }}>
               <FaInstagram />
             </motion.a>
-
-            <motion.a
-              href="https://wa.me/254756627342"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-red-600 transition"
-              variants={iconItem}
-              whileHover={{ scale: 1.25, rotate: [0, -8, 8, 0], boxShadow: "0px 4px 24px 0px #25d366aa", transition: { type: "spring", stiffness: 400, damping: 8 } }}
-              whileTap={{ scale: 0.93 }}
-            >
+            <motion.a href="https://wa.me/254756627342" target="_blank" rel="noopener noreferrer" className="hover:text-red-600 transition" variants={iconItem} whileHover={{ scale: 1.25, rotate: [0, -8, 8, 0], boxShadow: "0px 4px 24px 0px #25d366aa", transition: { type: "spring", stiffness: 400, damping: 8 } }} whileTap={{ scale: 0.93 }}>
               <FaWhatsapp />
             </motion.a>
-
-            <motion.a
-              href="https://github.com/Segeramos"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-red-600 transition"
-              variants={iconItem}
-              whileHover={{ scale: 1.25, rotate: [0, -8, 8, 0], boxShadow: "0px 4px 24px 0px #fbbf24aa", transition: { type: "spring", stiffness: 400, damping: 8 } }}
-              whileTap={{ scale: 0.93 }}
-            >
+            <motion.a href="https://github.com/Segeramos" target="_blank" rel="noopener noreferrer" className="hover:text-red-600 transition" variants={iconItem} whileHover={{ scale: 1.25, rotate: [0, -8, 8, 0], boxShadow: "0px 4px 24px 0px #fbbf24aa", transition: { type: "spring", stiffness: 400, damping: 8 } }} whileTap={{ scale: 0.93 }}>
               <FaGithub />
             </motion.a>
           </motion.div>
@@ -228,9 +181,6 @@ export default function Home() {
           />
         </div>
       </div>
-
-      {/* Footer */}
-      <Footer />
     </motion.div>
   );
 }
