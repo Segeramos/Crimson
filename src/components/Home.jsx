@@ -171,9 +171,9 @@ export default function Home() {
         {/* Right: Profile Image */}
         <div className="w-full lg:w-1/2 flex justify-center">
           <motion.img
-            src="/profile.png"
+            src="/profile.jpeg"
             alt="Profile"
-            className="rounded-2xl shadow-lg w-56 h-56 sm:w-72 sm:h-72 md:w-[360px] md:h-[360px] lg:w-[500px] lg:h-[500px] object-cover border-8 border-orange-100/10"
+            className="rounded-2xl shadow-lg w-56 h-56 sm:w-72 sm:h-82 md:w-[360px] md:h-[400px] lg:w-[500px] lg:h-[600px] object-cover border-8 border-orange-100/10"
             initial={{ opacity: 0, x: 300, rotate: 6 }}
             animate={{ opacity: 1, x: [300, -30, 20, -10, 0], rotate: [6, 0, 2, -1, 0] }}
             transition={{ duration: 1.5, ease: "easeOut", times: [0, 0.5, 0.7, 0.85, 1] }}
@@ -181,6 +181,6 @@ export default function Home() {
           />
         </div>
       </div>
-    </motion.div>
+    </motion.div> 
   );
 }
